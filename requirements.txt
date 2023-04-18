@@ -1,0 +1,7 @@
+# requirements.txt
+flask
+gunicorn
+firebase_admin
+opencv-python
+deepface
+numpy

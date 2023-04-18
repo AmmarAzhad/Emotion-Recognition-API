@@ -1,13 +1,19 @@
-from flask import Flask, request, send_file
-from PIL import Image
+from flask import Flask, request, send_file, jsonify
 import cv2
 from io import BytesIO
 from deepface import DeepFace as df
 import numpy as np
-import io
 import base64
+import os
 
 app = Flask(__name__)
+
+@app.route('/emotion', methods=['GET'])
+def get_emotion():
+    response = []
+    response.append(result['dominant_emotion'])
+    print(response)
+    return jsonify(response)
 
 @app.route('/convert', methods=['POST'])
 def convert_image():
@@ -27,14 +33,13 @@ def convert_image():
 
     # Send the BytesIO object to the client as a download
     buffer.seek(0)
-    with open('test.txt', 'wb') as f:
-        f.write(base64.b64encode(buffer.read()))
     return send_file(buffer, mimetype='image/jpeg')
 
 def detectEmotion(image):
 
     faceCascade = cv2.CascadeClassifier(cv2.data.haarcascades + 'haarcascade_frontalface_default.xml')
 
+    global result
     result = df.analyze(image, actions = ['emotion'], enforce_detection=False)
 
     gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
@@ -48,7 +53,7 @@ def detectEmotion(image):
 
     cv2.putText(image,
                 result['dominant_emotion'],
-                (50,50),
+                (50,100),
                 font, 3,
                 (255, 255, 255),
                 2,
@@ -57,4 +62,4 @@ def detectEmotion(image):
     return image
 
 if __name__ == '__main__':
-    app.run()
+    app.run(port=int(os.environ.get("PORT", 8080)),host='0.0.0.0',debug=True)
