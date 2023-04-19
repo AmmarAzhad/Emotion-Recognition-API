@@ -17,7 +17,7 @@ def get_emotion():
 
 @app.route('/convert', methods=['POST'])
 def convert_image():
-     # Get the image data from the request
+    # Get the image data from the request
     file_storage = request.files['image']
     file_bytes = file_storage.read()
 
@@ -52,7 +52,7 @@ def detectEmotion(image):
     font = cv2.FONT_HERSHEY_SIMPLEX
 
     cv2.putText(image,
-                result['dominant_emotion'],
+                str.upper(result['dominant_emotion']),
                 (50,100),
                 font, 3,
                 (255, 255, 255),
