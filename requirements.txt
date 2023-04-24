@@ -1,7 +1,5 @@
 # requirements.txt
 flask
-gunicorn
-firebase_admin
 opencv-python
-deepface
+deepface==0.0.75
 numpy

@@ -3,7 +3,6 @@ import cv2
 from io import BytesIO
 from deepface import DeepFace as df
 import numpy as np
-import base64
 import os
 
 app = Flask(__name__)
