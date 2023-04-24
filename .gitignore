@@ -59,6 +59,10 @@ node_modules/
 # Output of 'npm pack'
 *.tgz
 
+# Python Cache
+
+*.pyc
+
 # Yarn Integrity file
 .yarn-integrity
 
